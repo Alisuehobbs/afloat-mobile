@@ -9,9 +9,9 @@ angular.module('afloat', ['ionic', 'afloat.controllers', 'afloat.services', 'ngC
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-    console.log('is ready');
-    window.plugin.notification.local.registerPermission(function (granted) {
-        console.log('Permission has been granted: ' + granted);
+    console.log('device is ready');
+    window.plugin.notification.local.registerPermission(function(granted) {
+      console.log('Permission has been granted: ' + granted);
     });
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -28,15 +28,28 @@ angular.module('afloat', ['ionic', 'afloat.controllers', 'afloat.services', 'ngC
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
   $stateProvider
 
+  .state('landing', {
+    url: '/landing',
+    controller: 'RegisterCtrl',
+    templateUrl: 'templates/landing.html'
+  })
+
+  .state('signup', {
+    url: '/signup',
+    controller: 'RegisterCtrl',
+    templateUrl: 'templates/signup.html'
+  })
+
+  .state('login', {
+    url: '/login',
+    controller: 'RegisterCtrl',
+    templateUrl: 'templates/login.html'
+  })
+
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -55,23 +68,14 @@ angular.module('afloat', ['ionic', 'afloat.controllers', 'afloat.services', 'ngC
   })
 
   .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
+    url: '/chats',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/tab-chats.html',
+        controller: 'ChatsCtrl'
       }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
+    }
+  })
 
   .state('tab.account', {
     url: '/account',
@@ -84,6 +88,6 @@ angular.module('afloat', ['ionic', 'afloat.controllers', 'afloat.services', 'ngC
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/landing');
 
 });

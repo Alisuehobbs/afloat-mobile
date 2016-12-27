@@ -6,20 +6,16 @@ angular.module('afloat.controllers', [])
 
     console.log('im super ready');
 
-    $scope.sub = function() {
-      console.log('I was clicked');
-    }
-
     $scope.add = function() {
       console.log('I was clicked');
-        $cordovaLocalNotification.schedule({
+      $cordovaLocalNotification.schedule({
         id: 1,
         title: 'I will be so excited',
         text: 'If I see this on the phone',
         data: {
           customProperty: 'custom value'
         },
-        at: new Date(new Date().getTime() + 10*1000)
+        at: new Date(new Date().getTime() + 10 * 1000)
       }).then(function(result) {
         console.log('result:', result);
         $ionicPopup.alert({
@@ -47,8 +43,18 @@ angular.module('afloat.controllers', [])
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('RegisterCtrl', function($scope, $ionicPlatform, UserService) {
+  $ionicPlatform.ready(function() {
+    $scope.banana = 9;
+    $scope.submitSignUp = function(newUser) {
+      console.log('newUser:', newUser);
+      UserService.postNewUser(newUser).then(function successCallback(response) {
+        console.log('response:', response);
+      }, function errorCallback(error) {
+        console.log('error:', error);
+      })
+    }
+  })
 })
 
 .controller('AccountCtrl', function($scope) {
